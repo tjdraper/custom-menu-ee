@@ -33,6 +33,14 @@ class Installer
 	 */
 	public function install()
 	{
+		// Install module
+		ee('Model')->make('Module')->set(array(
+			'module_name' => 'Custom_menu',
+			'module_version' => $this->appInfo->getVersion(),
+			'has_cp_backend' => 'y',
+			'has_publish_fields' => 'n'
+		))->save();
+
 		// Install cp_css_end hook
 		ee('Model')->make('Extension')->set(array(
 			'class' => 'Custom_menu_ext',
@@ -57,6 +65,13 @@ class Installer
 	 */
 	public function uninstall()
 	{
+		// Delete the module
+		ee('Model')->get('Module')
+			->filter('module_name', 'Custom_menu')
+			->all()
+			->delete();
+
+		// Delete the extensions
 		ee('Model')->get('Extension')
 			->filter('class', 'Custom_menu_ext')
 			->all()
@@ -68,6 +83,16 @@ class Installer
 	 */
 	public function generalUpdate()
 	{
+		// Update the module version
+		$module = ee('Model')->get('Module')
+			->filter('class', 'Custom_menu_ext')
+			->all();
+
+		$module->version = $this->appInfo->getVersion();
+
+		$module->save();
+
+		// Update the extension version
 		$extension = ee('Model')->get('Extension')
 			->filter('class', 'Custom_menu_ext')
 			->all();

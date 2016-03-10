@@ -16,52 +16,6 @@ class Custom_menu_ext
 	// Set the version for ExpressionEngine
 	public $version = CUSTOM_MENU_VER;
 
-	protected $appInfo;
-
-	/**
-	 * Custom_menu_ext constructor
-	 *
-	 * @param array $settings
-	 */
-	public function __construct($settings = array())
-	{
-		$this->appInfo = ee('App')->get('custom_menu');
-	}
-
-	/**
-	 * Install extension
-	 */
-	public function activate_extension()
-	{
-		$installer = new Installer($this->appInfo);
-		$installer->install();
-	}
-
-	/**
-	 * Uninstall extension
-	 */
-	public function disable_extension()
-	{
-		$installer = new Installer($this->appInfo);
-		$installer->uninstall();
-	}
-
-	/**
-	 * Update extension
-	 */
-	public function update_extension($current = '')
-	{
-		if ($current ===  $this->appInfo->getVersion()) {
-			return false;
-		}
-
-		$installer = new Installer($this->appInfo);
-
-		$installer->generalUpdate();
-
-		return true;
-	}
-
 	/**
 	 * cp_css_end
 	 */
