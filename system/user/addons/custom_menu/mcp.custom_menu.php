@@ -30,6 +30,11 @@ class Custom_menu_mcp
 	public function index()
 	{
 		$settings = new Settings();
+
+		if ($_POST) {
+			$settings->save();
+		}
+
 		return $settings->render();
 	}
 }

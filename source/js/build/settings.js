@@ -25,15 +25,18 @@
 				// Clone the blank row
 				var $newRow = $blankRow.clone();
 
+				// Create random hash
+				var newRowId = Math.floor((Math.random() * 99999999999) + 1);
+
 				// Remove the blank row class and add the row class
 				$newRow.jsShow().removeClass('js-blank-row').addClass('js-row');
 
 				// Add name attribute to inputs
 				$newRow.find('.js-menu-name')
-					.attr('name', 'custom_menu[][name]');
+					.attr('name', 'custom_menu[rows][' + newRowId + '][name]');
 
 				$newRow.find('.js-menu-url')
-					.attr('name', 'custom_menu[][url]');
+					.attr('name', 'custom_menu[rows][' + newRowId + '][url]');
 
 				// Insert the row on the DOM
 				$tbody.append($newRow);
