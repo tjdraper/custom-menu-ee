@@ -29,9 +29,15 @@ class Settings
 
 		// Clean URL
 		foreach ($rows as $key => $val) {
+			// If name or URL is not set, remove row
+			if (! $val['name'] || ! $val['url']) {
+				unset($rows[$key]);
+				continue;
+			}
+
 			// Remove session data
 			$val['url'] = preg_replace('/&S=.*/', '', $val['url']);
-			$val['url'] = trim(preg_replace('/^(.+)?(index.php\?\/?)?(cp\/)/', '', $val['url']), '/');
+			$val['url'] = trim(preg_replace('/^(.+)?(\.php\?\/?)?(cp\/)/', '', $val['url']), '/');
 			$rows[$key] = $val;
 		}
 
