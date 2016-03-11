@@ -27,6 +27,14 @@ class Settings
 		// Get the rows
 		$rows = $post['rows'] ?: array();
 
+		// Clean URL
+		foreach ($rows as $key => $val) {
+			// Remove session data
+			$val['url'] = preg_replace('/&S=.*/', '', $val['url']);
+			$val['url'] = trim(preg_replace('/^(.+)?(index.php\?\/?)?(cp\/)/', '', $val['url']), '/');
+			$rows[$key] = $val;
+		}
+
 		// Get the extension
 		$ext = ee('Model')->get('Extension')
 			->filter('class', 'Custom_menu_ext')

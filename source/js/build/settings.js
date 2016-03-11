@@ -21,12 +21,15 @@
 			var $blankRow = $('.js-blank-row');
 
 			// When the add button is clicked
-			$('.js-add-menu-item').on('click', function() {
+			$('.js-add-menu-item').on('click', function(e) {
 				// Clone the blank row
 				var $newRow = $blankRow.clone();
 
 				// Create random hash
 				var newRowId = Math.floor((Math.random() * 99999999999) + 1);
+
+				// Prevent window jumping
+				e.preventDefault();
 
 				// Remove the blank row class and add the row class
 				$newRow.jsShow().removeClass('js-blank-row').addClass('js-row');
@@ -50,7 +53,10 @@
 			var $noResults = $('.js-no-results');
 
 			// When the delete row button is clicked
-			$('.js-tbody').on('click', '.js-remove-menu-item', function() {
+			$('.js-tbody').on('click', '.js-remove-menu-item', function(e) {
+				// Prevent window jumping
+				e.preventDefault();
+
 				// Delete the row from the DOM
 				$(this).closest('.js-row').remove();
 
