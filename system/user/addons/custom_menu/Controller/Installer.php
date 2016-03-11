@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Custom Menu controller
+ * Custom Menu Installer controller
  *
  * @package custom_menu
  * @author TJ Draper <tj@buzzingpixel.com>
@@ -85,7 +85,7 @@ class Installer
 	{
 		// Update the module version
 		$module = ee('Model')->get('Module')
-			->filter('class', 'Custom_menu_ext')
+			->filter('module_name', 'Custom_menu')
 			->all();
 
 		$module->version = $this->appInfo->getVersion();
