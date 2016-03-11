@@ -18,6 +18,9 @@ class Settings
 	 */
 	public function save()
 	{
+		// Get the site ID
+		$siteId = (int) ee()->config->item('site_id');
+
 		// Get the relevant post data
 		$post = ee()->input->post('custom_menu');
 
@@ -51,7 +54,7 @@ class Settings
 		$extSettings = $ext->settings ?: array();
 
 		// Update the settings
-		$extSettings[$activeGroupId] = $rows;
+		$extSettings[$siteId][$activeGroupId] = $rows;
 
 		// Update the extension
 		$ext->settings = $extSettings;
@@ -76,6 +79,9 @@ class Settings
 	 */
 	public function render()
 	{
+		// Get the site ID
+		$siteId = (int) ee()->config->item('site_id');
+
 		// Get active group ID
 		$activeGroupId = (int) end(ee()->uri->segments);
 
@@ -95,8 +101,8 @@ class Settings
 			->first()
 			->settings ?: array();
 
-		$groupSettings = isset($extensionSettings[$activeGroupId]) ?
-			$extensionSettings[$activeGroupId] : array();
+		$groupSettings = isset($extensionSettings[$siteId][$activeGroupId]) ?
+			$extensionSettings[$siteId][$activeGroupId] : array();
 
 		return array(
 			'body' => ee('View')->make('custom_menu:Settings')->render(compact(

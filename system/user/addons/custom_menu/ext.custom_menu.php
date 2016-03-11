@@ -32,6 +32,9 @@ class Custom_menu_ext
 		// Get any previous items set on this extension call
 		$js = ee()->extensions->last_call ?: '';
 
+		// Get the site ID
+		$siteId = (int) ee()->config->item('site_id');
+
 		// Get the user group ID
 		$groupId = (int) ee()->session->userdata('group_id');
 
@@ -43,8 +46,8 @@ class Custom_menu_ext
 			->settings ?: array();
 
 		// Get this user groups settings
-		$groupSettings = isset($extSettings[$groupId]) ?
-			$extSettings[$groupId] : array();
+		$groupSettings = isset($extSettings[$siteId][$groupId]) ?
+			$extSettings[$siteId][$groupId] : array();
 
 		// If there are no group settings there's no point going on
 		if (! $groupSettings) {
