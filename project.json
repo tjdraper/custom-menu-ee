@@ -12,6 +12,7 @@
 	"lessFiles": {
 	},
 	"jsBuildBefore": [
+		"lib/sortable.js"
 	],
 	"jsBuild": [
 	],

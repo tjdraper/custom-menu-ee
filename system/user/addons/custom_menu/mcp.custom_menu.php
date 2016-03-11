@@ -9,7 +9,9 @@
  * @copyright Copyright (c) 2016, BuzzingPixel
  */
 
+use BuzzingPixel\CustomMenu\Helper\CpCssJs;
 use BuzzingPixel\CustomMenu\Service\McpSidebar;
+use BuzzingPixel\CustomMenu\Controller\Settings;
 
 class Custom_menu_mcp
 {
@@ -18,6 +20,7 @@ class Custom_menu_mcp
 	 */
 	public function __construct()
 	{
+		CpCssJs::add();
 		McpSidebar::render();
 	}
 
@@ -26,6 +29,7 @@ class Custom_menu_mcp
 	 */
 	public function index()
 	{
-		return 'asdf';
+		$settings = new Settings();
+		return $settings->render();
 	}
 }

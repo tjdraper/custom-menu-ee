@@ -1,5 +1,9 @@
 (function(F) {
 	'use strict';
 
-	F.controller = {};
+	F.controller = {
+		settings: [
+			'settings'
+		]
+	};
 })(window.CUSTOM_MENU);
