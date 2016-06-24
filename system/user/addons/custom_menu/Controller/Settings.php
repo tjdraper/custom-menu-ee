@@ -47,7 +47,7 @@ class Settings
 		// Get the extension
 		$ext = ee('Model')->get('Extension')
 			->filter('class', 'Custom_menu_ext')
-			->filter('hook', 'cp_js_end')
+			->filter('hook', 'cp_custom_menu')
 			->first();
 
 		// Get the settings
@@ -97,7 +97,7 @@ class Settings
 		// Get the extension settings
 		$extensionSettings = ee('Model')->get('Extension')
 			->filter('class', 'Custom_menu_ext')
-			->filter('hook', 'cp_js_end')
+			->filter('hook', 'cp_custom_menu')
 			->first()
 			->settings ?: array();
 
