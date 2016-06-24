@@ -58,11 +58,20 @@ class Custom_menu_upd
 	 */
 	public function update($current = '')
 	{
+		// Check if any update is needed
 		if ($current === $this->version) {
 			return false;
 		}
 
+		// If the current version is less than 1.0.0, we need extension updates
+		if (version_compare($current, '1.0.0', '<')) {
+			$this->installer->updateTo1_0_0();
+		}
+
+		// Run general update routines
 		$this->installer->generalUpdate();
+
+		// All done here
 		return true;
 	}
 }

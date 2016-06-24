@@ -16,8 +16,21 @@ class Custom_menu_ext
 	// Set the version for ExpressionEngine
 	public $version = CUSTOM_MENU_VER;
 
+	// Extension settings
+	private $settings;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct($settings)
+	{
+		$this->settings = $settings;
+	}
+
 	/**
 	 * cp_css_end
+	 *
+	 * This needs to stay here for the extension hook call until update
 	 */
 	public function cp_css_end()
 	{
@@ -26,52 +39,40 @@ class Custom_menu_ext
 
 	/**
 	 * cp_js_end
+	 *
+	 * This needs to stay here for the extension hook call until update
 	 */
 	public function cp_js_end()
 	{
-		// Get any previous items set on this extension call
-		$js = ee()->extensions->last_call ?: '';
+		return '';
+	}
 
+	/**
+	 * cp_js_end
+	 */
+	public function cp_custom_menu($menu)
+	{
 		// Get the site ID
 		$siteId = (int) ee()->config->item('site_id');
 
 		// Get the user group ID
 		$groupId = (int) ee()->session->userdata('group_id');
 
-		// Get the extension settings
-		$extSettings = ee('Model')->get('Extension')
-			->filter('class', 'Custom_menu_ext')
-			->filter('hook', 'cp_js_end')
-			->first()
-			->settings ?: array();
-
 		// Get this user groups settings
-		$groupSettings = isset($extSettings[$siteId][$groupId]) ?
-			$extSettings[$siteId][$groupId] : array();
+		$groupSettings = isset($this->settings[$siteId][$groupId]) ?
+			$this->settings[$siteId][$groupId] : array();
 
 		// If there are no group settings there's no point going on
 		if (! $groupSettings) {
-			return $js;
+			return;
 		}
 
 		// Build CP URLs
 		foreach ($groupSettings as $key => $val) {
-			$url = ee('CP/URL', $val['url'])->compile();
-			$groupSettings[$key]['url'] = $url;
+			$menu->addItem(
+				$val['name'],
+				ee('CP/URL', $val['url'])
+			);
 		}
-
-		// Json encode menu items
-		$settings = json_encode(array_values($groupSettings));
-
-		// Output a JS variable of the menu items
-		$js .= "window.CUSTOM_MENU_ITEMS = {$settings};";
-
-		// Get the JS for this extension
-		$js .= file_get_contents(
-			PATH_THIRD . 'custom_menu/javascript/cp_js_end.js'
-		);
-
-		// Return the JS
-		return $js;
 	}
 }

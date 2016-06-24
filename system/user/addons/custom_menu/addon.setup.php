@@ -1,7 +1,7 @@
 <?php
 
 defined('CUSTOM_MENU_NAME') || define('CUSTOM_MENU_NAME', 'Custom Menu');
-defined('CUSTOM_MENU_VER') || define('CUSTOM_MENU_VER', '1.0.0-b.1');
+defined('CUSTOM_MENU_VER') || define('CUSTOM_MENU_VER', '1.0.0');
 
 return array(
 	'author' => 'TJ Draper',

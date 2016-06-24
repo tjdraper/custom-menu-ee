@@ -41,23 +41,18 @@ class Installer
 			'has_publish_fields' => 'n'
 		))->save();
 
-		// Install cp_css_end hook
-		ee('Model')->make('Extension')->set(array(
+		// Add cp_custom_menu extension
+		$cpCustomMenuExt = ee('Model')->make('Extension', array(
 			'class' => 'Custom_menu_ext',
-			'method' => 'cp_css_end',
-			'hook' => 'cp_css_end',
-			'settings' => '',
-			'version' => $this->appInfo->getVersion()
-		))->save();
+			'method' => 'cp_custom_menu',
+			'hook' => 'cp_custom_menu',
+			'settings' => $settings,
+			'version' => $this->appInfo->getVersion(),
+			'enabled' => 'y'
+		));
 
-		// Install cp_js_end hook
-		ee('Model')->make('Extension')->set(array(
-			'class' => 'Custom_menu_ext',
-			'method' => 'cp_js_end',
-			'hook' => 'cp_js_end',
-			'settings' => '',
-			'version' => $this->appInfo->getVersion()
-		))->save();
+		// Save the extension
+		$cpCustomMenuExt->save();
 	}
 
 	/**
@@ -88,7 +83,7 @@ class Installer
 			->filter('module_name', 'Custom_menu')
 			->all();
 
-		$module->version = $this->appInfo->getVersion();
+		$module->module_version = $this->appInfo->getVersion();
 
 		$module->save();
 
@@ -100,5 +95,45 @@ class Installer
 		$extension->version = $this->appInfo->getVersion();
 
 		$extension->save();
+	}
+
+	/**
+	 * Update to 1.0.0
+	 */
+	public function updateTo1_0_0()
+	{
+		// Get cp_js_end extension
+		$cpJsEnd = ee('Model')->get('Extension')
+			->filter('class', 'Custom_menu_ext')
+			->filter('method', 'cp_js_end')
+			->first();
+
+		// Get the cp_js_end settings
+		$settings = $cpJsEnd->settings;
+
+		// Get cp_css_end and cp_js_end extensions
+		$extensions = ee('Model')->get('Extension')
+			->filter('class', 'Custom_menu_ext')
+			->filter('method', 'IN', array(
+				'cp_css_end',
+				'cp_js_end'
+			))
+			->all();
+
+		// Delete extensions
+		$extensions->delete();
+
+		// Add cp_custom_menu extension
+		$cpCustomMenuExt = ee('Model')->make('Extension', array(
+			'class' => 'Custom_menu_ext',
+			'method' => 'cp_custom_menu',
+			'hook' => 'cp_custom_menu',
+			'settings' => $settings,
+			'version' => $this->appInfo->getVersion(),
+			'enabled' => 'y'
+		));
+
+		// Save the extension
+		$cpCustomMenuExt->save();
 	}
 }
