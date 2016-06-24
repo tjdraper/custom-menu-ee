@@ -4,13 +4,13 @@
 		<input type="hidden" name="custom_menu[active_group_id]" value="<?= $activeGroupId ?>">
 		<input type="hidden" name="custom_menu[rows]">
 		<div class="tbl-wrap pb">
-			<table cellspacing="0" class="grid-input-form">
+			<table cellspacing="0" class="grid-input-form cust-menu-table">
 				<thead>
 					<tr>
 						<th class="first reorder-col"></th>
-						<th>Menu Title</th>
+						<th class="cust-menu-table__main-menu-name">Menu Title</th>
 						<th>Link</th>
-						<th class="last grid-remove"></th>
+						<th class="last grid-remove cust-menu-table__main-menu-remove"></th>
 					</tr>
 				</thead>
 				<tbody class="js-tbody js-sortable-container">
@@ -26,6 +26,8 @@
 						</td>
 						<td>
 							<input type="text" class="js-menu-url">
+							<br><br>
+							<?php $this->embed('custom_menu:SubTable', array('subSettings' => array())) ?>
 						</td>
 						<td>
 							<ul class="toolbar">
@@ -34,13 +36,15 @@
 						</td>
 					</tr>
 					<?php foreach ($groupSettings as $key => $val) { ?>
-						<tr class="js-sort-row js-row">
+						<tr class="js-sort-row js-row" data-row-key="<?= $key ?>">
 							<td class="reorder-col js-sort-handle"><span class="ico reorder"></span></td>
 							<td>
 								<input type="text" class="js-menu-name" name="custom_menu[rows][<?= $key ?>][name]" value="<?= $val['name'] ?>">
 							</td>
 							<td>
 								<input type="text" class="js-menu-url" name="custom_menu[rows][<?= $key ?>][url]" value="<?= $val['url'] ?>">
+								<br><br>
+								<?php $this->embed('custom_menu:SubTable', array('subSettings' => array())) ?>
 							</td>
 							<td>
 								<ul class="toolbar">
