@@ -29,7 +29,7 @@
 		</tr>
 		<?php foreach ($subSettings as $subKey => $subVal) { ?>
 			<tr class="js-sort-sub-row js-sub-row">
-				<td class="reorder-col js-sort-handle"><span class="ico reorder"></span></td>
+				<td class="reorder-col js-sort-sub-handle"><span class="ico reorder"></span></td>
 				<td>
 					<input
 						type="text" class="js-sub-menu-name"
