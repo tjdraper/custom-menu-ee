@@ -71,9 +71,9 @@ class Custom_menu_ext
 		foreach ($groupSettings as $val) {
 			// Check for sub menu
 			if (isset($val['subMenu'])) {
-				foreach ($val['subMenu'] as $subMenu) {
-					$sub = $menu->addSubMenu($val['name']);
+				$sub = $menu->addSubMenu($val['name']);
 
+				foreach ($val['subMenu'] as $subMenu) {
 					$sub->addItem($subMenu['name'], ee('CP/URL', $subMenu['url']));
 				}
 			} else {
