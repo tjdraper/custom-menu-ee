@@ -68,11 +68,17 @@ class Custom_menu_ext
 		}
 
 		// Build CP URLs
-		foreach ($groupSettings as $key => $val) {
-			$menu->addItem(
-				$val['name'],
-				ee('CP/URL', $val['url'])
-			);
+		foreach ($groupSettings as $val) {
+			// Check for sub menu
+			if (isset($val['subMenu'])) {
+				foreach ($val['subMenu'] as $subMenu) {
+					$sub = $menu->addSubMenu($val['name']);
+
+					$sub->addItem($subMenu['name'], ee('CP/URL', $subMenu['url']));
+				}
+			} else {
+				$menu->addItem($val['name'], ee('CP/URL', $val['url']));
+			}
 		}
 	}
 }
