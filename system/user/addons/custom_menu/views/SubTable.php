@@ -27,14 +27,23 @@
 				</ul>
 			</td>
 		</tr>
-		<?php foreach ($subSettings as $key => $val) { ?>
+		<?php foreach ($subSettings as $subKey => $subVal) { ?>
 			<tr class="js-sort-sub-row js-sub-row">
 				<td class="reorder-col js-sort-handle"><span class="ico reorder"></span></td>
 				<td>
-					<input type="text" class="js-sub-menu-name" name="custom_menu[rows][<?= $key ?>][name]" value="<?= $val['name'] ?>">
+					<input
+						type="text" class="js-sub-menu-name"
+						name="custom_menu[rows][<?= $key ?>][subMenu][<?= $subKey ?>][name]"
+						value="<?= $subVal['name'] ?>"
+					>
 				</td>
 				<td>
-					<input type="text" class="js-sub-menu-url" name="custom_menu[rows][<?= $key ?>][url]" value="<?= $val['url'] ?>">
+					<input
+						type="text"
+						class="js-sub-menu-url"
+						name="custom_menu[rows][<?= $key ?>][subMenu][<?= $subKey ?>][url]"
+						value="<?= $subVal['url'] ?>"
+					>
 				</td>
 				<td>
 					<ul class="toolbar">

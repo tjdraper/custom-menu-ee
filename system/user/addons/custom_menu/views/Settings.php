@@ -44,7 +44,13 @@
 							<td>
 								<input type="text" class="js-menu-url" name="custom_menu[rows][<?= $key ?>][url]" value="<?= $val['url'] ?>">
 								<br><br>
-								<?php $this->embed('custom_menu:SubTable', array('subSettings' => array())) ?>
+								<?php
+									$subSettings = isset($val['subMenu']) ? $val['subMenu'] : array();
+								?>
+								<?php $this->embed('custom_menu:SubTable', array(
+									'subSettings' => $subSettings,
+									'key' => $key
+								)) ?>
 							</td>
 							<td>
 								<ul class="toolbar">

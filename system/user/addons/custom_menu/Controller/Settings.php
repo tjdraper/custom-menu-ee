@@ -33,7 +33,7 @@ class Settings
 		// Clean URL
 		foreach ($rows as $key => $val) {
 			// If name or URL is not set, remove row
-			if (! $val['name'] || ! $val['url']) {
+			if (! $val['name']) {
 				unset($rows[$key]);
 				continue;
 			}
@@ -42,6 +42,22 @@ class Settings
 			$val['url'] = preg_replace('/&S=.*/', '', $val['url']);
 			$val['url'] = trim(preg_replace('/^(.+)?(\.php\?\/?)?(cp\/)/', '', $val['url']), '/');
 			$rows[$key] = $val;
+
+			// Check if sub menu is set
+			if (isset($val['subMenu']) && gettype($val['subMenu']) === 'array') {
+				foreach ($val['subMenu'] as $subKey => $subVal) {
+					if (! $subVal['name']) {
+						unset($rows[$key]['subMenu'][$subKey]);
+					}
+				}
+
+				$url = $rows[$key]['subMenu'][$subKey]['url'];
+
+				// Remove session data
+				$url = preg_replace('/&S=.*/', '', $url);
+				$url = trim(preg_replace('/^(.+)?(\.php\?\/?)?(cp\/)/', '', $url), '/');
+				$rows[$key]['subMenu'][$subKey]['url'] = $url;
+			}
 		}
 
 		// Get the extension
